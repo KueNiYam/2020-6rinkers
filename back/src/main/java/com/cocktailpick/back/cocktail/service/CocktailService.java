@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,6 +33,12 @@ public class CocktailService {
 	private final CocktailRepository cocktailRepository;
 	private final TagRepository tagRepository;
 	private final RandomIndexGenerator randomIndexGenerator;
+
+	@Autowired
+	public CocktailService(CocktailRepository cocktailRepository,
+		TagRepository tagRepository) {
+		this(cocktailRepository, tagRepository, new TodayRandomIndexGenerator());
+	}
 
 	@Transactional(readOnly = true)
 	public List<CocktailResponse> findAllCocktails() {
