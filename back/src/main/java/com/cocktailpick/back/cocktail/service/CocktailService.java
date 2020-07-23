@@ -82,4 +82,8 @@ public class CocktailService {
 	public void deleteCocktail(Long id) {
 		cocktailRepository.deleteById(id);
 	}
+
+	public CocktailResponse findCocktailOfToday() {
+		return null;
+	}
 }

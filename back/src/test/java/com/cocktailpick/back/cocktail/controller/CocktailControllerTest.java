@@ -161,4 +161,17 @@ class CocktailControllerTest {
 			.andExpect(status().isNoContent())
 			.andDo(print());
 	}
+
+	@DisplayName("오늘의 칵테일을 조회한다.")
+	@Test
+	void findCocktailOfToday() throws Exception {
+		when(cocktailService.findCocktailOfToday()).thenReturn(
+			CocktailResponse.of(blueHawaii));
+
+		mockMvc.perform(get("/api/cocktails/today"))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.name").value(blueHawaii.getName()))
+			.andExpect(jsonPath("$.imageUrl").value(blueHawaii.getImageUrl()))
+			.andDo(print());
+	}
 }

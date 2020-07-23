@@ -44,7 +44,8 @@ public class CocktailController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Void> updateCocktail(@PathVariable Long id, @RequestBody CocktailRequest cocktailRequest) {
+	public ResponseEntity<Void> updateCocktail(@PathVariable Long id,
+		@RequestBody CocktailRequest cocktailRequest) {
 		cocktailService.updateCocktail(id, cocktailRequest);
 		return ResponseEntity.ok().build();
 	}
@@ -53,5 +54,10 @@ public class CocktailController {
 	public ResponseEntity<Void> deleteCocktail(@PathVariable Long id) {
 		cocktailService.deleteCocktail(id);
 		return ResponseEntity.noContent().build();
+	}
+
+	@GetMapping("/today")
+	public ResponseEntity<CocktailResponse> findCocktailOfToday() {
+		return ResponseEntity.ok(cocktailService.findCocktailOfToday());
 	}
 }
