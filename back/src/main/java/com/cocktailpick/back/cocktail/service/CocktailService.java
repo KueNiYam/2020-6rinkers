@@ -17,6 +17,8 @@ import com.cocktailpick.back.cocktail.dto.CocktailRequest;
 import com.cocktailpick.back.cocktail.dto.CocktailResponse;
 import com.cocktailpick.back.common.EntityMapper;
 import com.cocktailpick.back.common.csv.OpenCsvReader;
+import com.cocktailpick.back.common.exceptions.EntityNotFoundException;
+import com.cocktailpick.back.common.exceptions.ErrorCode;
 import com.cocktailpick.back.recipe.domain.RecipeItem;
 import com.cocktailpick.back.tag.domain.CocktailTag;
 import com.cocktailpick.back.tag.domain.CocktailTags;
@@ -40,7 +42,7 @@ public class CocktailService {
 	@Transactional(readOnly = true)
 	public CocktailDetailResponse findCocktail(Long id) {
 		Cocktail cocktail = cocktailRepository.findById(id)
-			.orElseThrow(RuntimeException::new);
+			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.COCKTAIL_NOT_FOUND));
 
 		return CocktailDetailResponse.of(cocktail);
 	}
