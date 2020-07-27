@@ -39,12 +39,6 @@ public class CocktailService {
 		this(cocktailRepository, tagRepository, new CocktailOfTodayStrategy());
 	}
 
-	@Autowired
-	public CocktailService(CocktailRepository cocktailRepository,
-		TagRepository tagRepository) {
-		this(cocktailRepository, tagRepository, new TodayRandomIndexGenerator());
-	}
-
 	@Transactional(readOnly = true)
 	public List<CocktailResponse> findAllCocktails() {
 		return Collections.unmodifiableList(cocktailRepository.findAll().stream()
@@ -82,8 +76,7 @@ public class CocktailService {
 		List<Tag> tags = tagRepository.findByNameIn(cocktailRequest.getTag());
 		CocktailTags cocktailTags = tags.stream()
 			.map(tag -> CocktailTag.associate(cocktail, tag))
-			.collect(
-				Collectors.collectingAndThen(Collectors.toList(), CocktailTags::new));
+			.collect(Collectors.collectingAndThen(Collectors.toList(), CocktailTags::new));
 
 		cocktail.update(requestCocktail, cocktailTags);
 	}
@@ -140,8 +133,7 @@ public class CocktailService {
 		}
 	}
 
-	private List<Tag> getTagsByName(EntityMapper<String, Tag> tagMapper,
-		List<String> tagNames) {
+	private List<Tag> getTagsByName(EntityMapper<String, Tag> tagMapper, List<String> tagNames) {
 		return tagNames.stream()
 			.map(tagMapper::get)
 			.collect(Collectors.toList());

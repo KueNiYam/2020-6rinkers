@@ -46,8 +46,7 @@ public class CocktailController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Void> updateCocktail(@PathVariable Long id,
-		@RequestBody CocktailRequest cocktailRequest) {
+	public ResponseEntity<Void> updateCocktail(@PathVariable Long id, @RequestBody CocktailRequest cocktailRequest) {
 		cocktailService.updateCocktail(id, cocktailRequest);
 		return ResponseEntity.ok().build();
 	}
